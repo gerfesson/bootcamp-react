@@ -2,7 +2,7 @@
 
 Configure uma estrutura ReactJS do zero com Babel, Webpack e Webpack Dev Server. Além disso, utilize as ferramentas ESLint, EditorConfig e Prettier durante o desenvolvimento desse projeto. 
 
-![Feed](/assets/feed.png)
+![Feed](./assets/feed.png)
 
 Nesse projeto você desenvolverá um feed de posts estilo Facebook. Crie um layout tentando chegar o mais próximo possível da imagem abaixo:
 
