@@ -10,15 +10,13 @@ export default class Post extends Component {
 
   render() {
     return (
-      <div>
+      <div className="post">
         <PostHeader
           avatar={this.props.header.avatar}
           name={this.props.header.name}
           time={this.props.header.time}
         />
-        <div>
-          <p className="body-publi">{this.props.body}</p>
-        </div>
+        <p className="body-publi">{this.props.body}</p>
       </div>
     );
   }

@@ -4,6 +4,8 @@ import { render } from "react-dom";
 import Header from "./components/Header.js";
 import Post from "./components/Post.js";
 
+import "./style.scss";
+
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -35,16 +37,23 @@ export default class App extends Component {
         <div>
           <Header />
         </div>
-        {this.state.posts.map(post => {
-          console.log(post.avatar + "\n" + post.name + "\n" + post.time);
-          return (
-            <Post
-              id={post.id}
-              header={{ avatar: post.avatar, name: post.name, time: post.time }}
-              body={post.body}
-            />
-          );
-        })}
+        <div className="page">
+          {this.state.posts.map(post => {
+            console.log(post.avatar + "\n" + post.name + "\n" + post.time);
+            return (
+              <Post
+                key={post.id}
+                id={post.id}
+                header={{
+                  avatar: post.avatar,
+                  name: post.name,
+                  time: post.time
+                }}
+                body={post.body}
+              />
+            );
+          })}
+        </div>
       </Fragment>
     );
   }
