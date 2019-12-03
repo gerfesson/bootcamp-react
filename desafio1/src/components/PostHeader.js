@@ -8,11 +8,13 @@ export default class PostHeader extends Component {
 
   render() {
     return (
-      <Fragment>
+      <div className="post-header">
         <img className="avatar-publi" src={this.props.avatar} alt="img" />
-        <p className="name-publi">{this.props.name}</p>
-        <p className="time-publi">{this.props.time}</p>
-      </Fragment>
+        <div>
+          <p className="name-publi">{this.props.name}</p>
+          <p className="time-publi">{this.props.time}</p>
+        </div>
+      </div>
     );
   }
 }

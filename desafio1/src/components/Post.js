@@ -16,6 +16,7 @@ export default class Post extends Component {
           name={this.props.header.name}
           time={this.props.header.time}
         />
+        <hr />
         <p className="body-publi">{this.props.body}</p>
       </div>
     );
