@@ -1,7 +1,6 @@
 body {
-  margin: 0;
-  width: 100vh;
   height: 100vh;
+  margin: 0;
 }
 
 img {
@@ -10,10 +9,25 @@ img {
   border-radius: 50%;
 }
 
+.post-header {
+  display: flex;
+
+  div {
+    flex-direction: column;
+  }
+  p {
+    margin: 0;
+    padding-left: 20px;
+    padding-top: 5px;
+  }
+}
+
 .page {
-  display: table-row;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background: #e4e4e4;
-  height: 80vh;
+  height: 95vh;
 }
 
 .post {
@@ -23,8 +37,8 @@ img {
   border-radius: 2px;
   box-shadow: 0px 0px 3px #c2c2c2;
   color: #c2c2c2;
-  max-width: 50%;
-  padding: 30px;
+  width: 30%;
+  padding: 20px;
 }
 
 .name-publi {
