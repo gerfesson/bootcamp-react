@@ -1,13 +1,14 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 import GlobalStyle from './styles/global';
 
+import Main from './pages/Main';
+
 const App = () => (
-  // eslint-disable-next-line react/jsx-fragments
-  <Fragment>
+  <>
     <GlobalStyle />
-    <div className="App" />
-  </Fragment>
+    <Main />
+  </>
 );
 
 export default App;
