@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import api from '../../services/api';
+
 import logo from '../../assets/logo.png';
 
 import { Container, Form } from './styles';
@@ -161,8 +163,15 @@ export default class Main extends Component {
     };
   }
 
-  handleAddRepository = (e) => {
+  handleAddRepository = async (e) => {
     e.preventDefault();
+    const { repositoryInput } = this.state;
+    try {
+      const response = await api.get(`repos/${repositoryInput}`);
+      console.log(response);
+    } catch (err) {
+      console.log('erro');
+    }
   };
 
   render() {
@@ -170,9 +179,8 @@ export default class Main extends Component {
     return (
       <Container>
         <img src={logo} alt="Github Compare" />
-        <Form>
+        <Form onSubmit={this.handleAddRepository}>
           <input
-            onSubmit={this.handleAddRepository.bind(this)}
             type="text"
             placeholder="Digite um usuário do Github"
             value={repositoryInput}
