@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 import api from '../../services/api';
 
@@ -11,6 +12,8 @@ export default class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loading: false,
+      repositoryError: false,
       repositoryInput: '',
       repositories: [],
     };
@@ -19,30 +22,45 @@ export default class Main extends Component {
   handleAddRepository = async (e) => {
     e.preventDefault();
     const { repositoryInput } = this.state;
+
+    this.setState({ loading: true });
+
     try {
-      const response = await api.get(`repos/${repositoryInput}`);
+      const { data: repository } = await api.get(`repos/${repositoryInput}`);
+      repository.lastCommit = moment(repository.pushed_at).fromNow();
+
       this.setState((previousState) => ({
         repositoryInput: '',
-        repositories: [...previousState.repositories, response.data],
+        repositories: [...previousState.repositories, repository],
+        repositoryError: false,
       }));
     } catch (err) {
-      console.log('erro', err);
+      this.setState({ repositoryError: true });
+    } finally {
+      this.setState({ loading: false });
     }
   };
 
   render() {
-    const { repositories, repositoryInput } = this.state;
+    const {
+      repositories,
+      repositoryInput,
+      repositoryError,
+      loading,
+    } = this.state;
     return (
       <Container>
         <img src={logo} alt="Github Compare" />
-        <Form onSubmit={this.handleAddRepository}>
+        <Form withError={repositoryError} onSubmit={this.handleAddRepository}>
           <input
             type="text"
             placeholder="Digite um usuário do Github"
             value={repositoryInput}
             onChange={(e) => this.setState({ repositoryInput: e.target.value })}
           />
-          <button type="submit">OK</button>
+          <button type="submit">
+            {loading ? <i className="fa fa-spinner fa-pulse" /> : 'OK'}
+          </button>
         </Form>
         <CompareList repositories={repositories} />
       </Container>
