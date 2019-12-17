@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import moment from 'moment';
+import React, { Component } from "react";
+import moment from "moment";
 
-import api from '../../services/api';
+import api from "../../services/api";
 
-import logo from '../../assets/logo.png';
+import logo from "../../assets/logo.png";
 
-import { Container, Form } from './styles';
-import CompareList from '../../components/CompareList/index';
+import { Container, Form } from "./styles";
+import CompareList from "../../components/CompareList/index";
 
 export default class Main extends Component {
   constructor(props) {
@@ -14,14 +14,20 @@ export default class Main extends Component {
     this.state = {
       loading: false,
       repositoryError: false,
-      repositoryInput: '',
-      repositories: [],
+      repositoryInput: "",
+      repositories: []
     };
   }
 
-  handleAddRepository = async (e) => {
+  componentDidMount() {
+    if (localStorage.getItem("repositories") === null) {
+      localStorage.setItem("repositories", JSON.stringify([]));
+    }
+  }
+
+  handleAddRepository = async e => {
     e.preventDefault();
-    const { repositoryInput } = this.state;
+    const { repositoryInput, repositories } = this.state;
 
     this.setState({ loading: true });
 
@@ -29,11 +35,21 @@ export default class Main extends Component {
       const { data: repository } = await api.get(`repos/${repositoryInput}`);
       repository.lastCommit = moment(repository.pushed_at).fromNow();
 
-      this.setState((previousState) => ({
-        repositoryInput: '',
+      this.setState(previousState => ({
+        repositoryInput: "",
         repositories: [...previousState.repositories, repository],
-        repositoryError: false,
+        repositoryError: false
       }));
+
+      if (localStorage.getItem("repositories") !== repositories) {
+        if (repositories === []) {
+          this.setState({
+            repositories: JSON.parse(localStorage.getItem(repositories))
+          });
+        } else {
+          localStorage.setItem("repositories", JSON.stringify(repositories));
+        }
+      }
     } catch (err) {
       this.setState({ repositoryError: true });
     } finally {
@@ -46,7 +62,7 @@ export default class Main extends Component {
       repositories,
       repositoryInput,
       repositoryError,
-      loading,
+      loading
     } = this.state;
     return (
       <Container>
@@ -56,10 +72,10 @@ export default class Main extends Component {
             type="text"
             placeholder="Digite um usuário do Github"
             value={repositoryInput}
-            onChange={(e) => this.setState({ repositoryInput: e.target.value })}
+            onChange={e => this.setState({ repositoryInput: e.target.value })}
           />
           <button type="submit">
-            {loading ? <i className="fa fa-spinner fa-pulse" /> : 'OK'}
+            {loading ? <i className="fa fa-spinner fa-pulse" /> : "OK"}
           </button>
         </Form>
         <CompareList repositories={repositories} />
