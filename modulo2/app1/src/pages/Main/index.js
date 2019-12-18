@@ -22,6 +22,10 @@ export default class Main extends Component {
   componentDidMount() {
     if (localStorage.getItem("repositories") === null) {
       localStorage.setItem("repositories", JSON.stringify([]));
+    } else {
+      this.setState({
+        repositories: JSON.parse(localStorage.getItem("repositories"))
+      });
     }
   }
 
@@ -42,13 +46,7 @@ export default class Main extends Component {
       }));
 
       if (localStorage.getItem("repositories") !== repositories) {
-        if (repositories === []) {
-          this.setState({
-            repositories: JSON.parse(localStorage.getItem(repositories))
-          });
-        } else {
-          localStorage.setItem("repositories", JSON.stringify(repositories));
-        }
+        localStorage.setItem("repositories", JSON.stringify(repositories));
       }
     } catch (err) {
       this.setState({ repositoryError: true });
