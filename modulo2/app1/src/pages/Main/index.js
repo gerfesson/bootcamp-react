@@ -17,6 +17,9 @@ export default class Main extends Component {
       repositoryInput: '',
       repositories: [],
     };
+
+    this.handleChildDelete = this.handleChildDelete.bind(this);
+    this.handleChildRefresh = this.handleChildRefresh.bind(this);
   }
 
   componentDidMount() {
@@ -58,6 +61,14 @@ export default class Main extends Component {
     }
   };
 
+  handleChildDelete() {
+    console.log('entrou');
+  }
+
+  handleChildRefresh(input) {
+    console.log(input);
+  }
+
   render() {
     const {
       repositories,
@@ -65,6 +76,7 @@ export default class Main extends Component {
       repositoryError,
       loading,
     } = this.state;
+
     return (
       <Container>
         <img src={logo} alt="Github Compare" />
@@ -79,7 +91,11 @@ export default class Main extends Component {
             {loading ? <i className="fa fa-spinner fa-pulse" /> : 'OK'}
           </button>
         </Form>
-        <CompareList repositories={repositories} />
+        <CompareList
+          repositories={repositories}
+          handleDelete={this.handleChildDelete}
+          handleRefresh={this.handleChildRefresh}
+        />
       </Container>
     );
   }
