@@ -69,8 +69,21 @@ export default class Main extends Component {
     this.setState({ repositories: array });
   }
 
-  handleChildRefresh = (input) => {
-    console.log(`refresh ${input}`);
+  handleChildRefresh = async (input) => {
+    const array = JSON.parse(localStorage.getItem('repositories'));
+    const index = array.findIndex((obj) => obj.full_name === input);
+    // this.setState({ loadingItem: true });
+    try {
+      const { data: repository } = await api.get(`repos/${input}`);
+      repository.lastCommit = moment(repository.pushed_at).fromNow();
+      array[index] = repository;
+      localStorage.setItem('repositories', JSON.stringify(array));
+      this.setState({ repositories: array });
+    } catch (err) {
+      this.setState({ repositoryError: true });
+    } finally {
+      // this.setState({ loadingItem: false });
+    }
   }
 
   render() {
@@ -79,6 +92,7 @@ export default class Main extends Component {
       repositoryInput,
       repositoryError,
       loading,
+      loadingItem,
     } = this.state;
 
     return (
@@ -97,6 +111,7 @@ export default class Main extends Component {
         </Form>
         <CompareList
           repositories={repositories}
+          loadingItem={loadingItem}
           handleDelete={this.handleChildDelete}
           handleRefresh={this.handleChildRefresh}
         />
