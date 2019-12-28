@@ -7,13 +7,15 @@ export default class CompareList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: false,
+      loadingItem: false,
     };
   }
 
   render() {
-    const { loading } = this.state;
-    const { repositories, handleDelete, handleRefresh } = this.props;
+    const { loadingItem } = this.state;
+    const {
+      repositories, handleDelete, handleRefresh,
+    } = this.props;
     return (
       <Container>
         {repositories.map((repository) => (
@@ -50,7 +52,7 @@ export default class CompareList extends Component {
                   <i className="fa fa-trash" />
                 </button>
                 <button type="button" onClick={() => handleRefresh(repository.full_name)}>
-                  {loading ? <i className="fa fa-spinner fa-pulse" /> : <i className="fa fa-refresh" />}
+                  {loadingItem ? <i className="fa fa-spinner fa-pulse" /> : <i className="fa fa-refresh" />}
                 </button>
               </div>
             </header>
