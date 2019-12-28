@@ -61,12 +61,16 @@ export default class Main extends Component {
     }
   };
 
-  handleChildDelete() {
-    console.log('entrou');
+  handleChildDelete = (input) => {
+    const array = JSON.parse(localStorage.getItem('repositories'));
+    const index = array.findIndex((obj) => obj.full_name === input);
+    array.splice(index, 1);
+    localStorage.setItem('repositories', JSON.stringify(array));
+    this.setState({ repositories: array });
   }
 
-  handleChildRefresh(input) {
-    console.log(input);
+  handleChildRefresh = (input) => {
+    console.log(`refresh ${input}`);
   }
 
   render() {
