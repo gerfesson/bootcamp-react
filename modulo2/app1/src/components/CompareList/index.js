@@ -46,10 +46,10 @@ export default class CompareList extends Component {
                 </li>
               </ul>
               <div>
-                <button type="button" onClick={handleDelete}>
+                <button type="button" onClick={() => handleDelete(repository.full_name)}>
                   <i className="fa fa-trash" />
                 </button>
-                <button type="button" onClick={handleRefresh(repository.full_name)}>
+                <button type="button" onClick={() => handleRefresh(repository.full_name)}>
                   {loading ? <i className="fa fa-spinner fa-pulse" /> : <i className="fa fa-refresh" />}
                 </button>
               </div>
