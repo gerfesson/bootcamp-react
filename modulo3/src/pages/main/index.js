@@ -35,6 +35,7 @@ render() {
         />
         <button type="submit">Adicionar</button>
         { favorites.loading && <span>Carregando...</span> }
+        { !!favorites.error && <span style={{ color: '#F00' }}>{favorites.error}</span>}
       </form>
 
       <ul>
@@ -66,6 +67,7 @@ Main.propTypes = {
       description: PropTypes.string,
       url: PropTypes.string,
     })),
+    error: PropTypes.oneOfType([null, PropTypes.string]),
   }).isRequired,
 };
 
